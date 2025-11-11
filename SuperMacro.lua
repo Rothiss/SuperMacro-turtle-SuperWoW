@@ -83,8 +83,19 @@ function SuperMacroFrame_OnHide()
 	SuperMacroFrame.savedPoint = {}
 	_, _, _, SuperMacroFrame.savedPoint.x, SuperMacroFrame.savedPoint.y  = SuperMacroFrame:GetPoint()
 
+	-- Clear focus from all edit boxes to prevent crash when closing with Escape
+	SuperMacroFrameText:ClearFocus();
+	SuperMacroFrameSuperText:ClearFocus();
+	SuperMacroFrameExtendText:ClearFocus();
+
 	SuperMacroPopupFrame:Hide();
-	SuperMacroOptionsFrame:Hide()
+	SuperMacroOptionsFrame:Hide();
+
+	-- Hide ColorPickerFrame if it's open to prevent crash
+	if ColorPickerFrame:IsVisible() then
+		ColorPickerFrame:Hide();
+	end
+
 	SuperMacroFrame_SaveMacro();
 	PlaySound("igCharacterInfoClose");
 	SuperMacroRunAllExtend()
@@ -152,7 +163,7 @@ function SuperMacroFrame_Update()
 		SuperMacroFrameText:SetText('');
 		SuperMacroFrameSelectedMacroButtonIcon:SetTexture('');
 	end
-	
+
 	-- Macro List
 	for j=0, MAX_MACROS, MAX_MACROS do
 		if ( j == 0 ) then
@@ -177,7 +188,7 @@ function SuperMacroFrame_Update()
 				macroButton:SetChecked(1);
     				SuperMacroFrameSelectedMacroName:SetText(name);
 					SuperMacroFrameText:SetText(body);
-					SuperMacroFrameSelectedMacroButton:SetID(macroID);				
+					SuperMacroFrameSelectedMacroButton:SetID(macroID);
     				SuperMacroFrameSelectedMacroButtonIcon:SetTexture(texture);
 			else
 				macroButton:SetChecked(0);
@@ -190,7 +201,7 @@ function SuperMacroFrame_Update()
 		end
 	end
 	end
-	
+
 	--Update New Button
 	if ( numAccountMacros == MAX_MACROS ) then
 		SuperMacroNewAccountButton:Disable();
@@ -202,7 +213,7 @@ function SuperMacroFrame_Update()
 	else
 		SuperMacroNewCharacterButton:Enable();
 	end
-	
+
 	end
 -- END update regular frame
 
@@ -225,7 +236,7 @@ function SuperMacroFrame_Update()
 		SuperMacroDeleteSuperButton:Enable();
 		SuperMacroEditButton:Enable();
 	end
-	
+
 	if ( not SuperMacroFrame.selectedSuper or GetNumSuperMacros()==0) then
 	--[[
 		SuperMacroSaveSuperButton:Enable();
@@ -240,12 +251,12 @@ function SuperMacroFrame_Update()
 		SuperMacroFrameSuperText:SetText('');
 		SuperMacroFrameSelectedMacroSuperButtonIcon:SetTexture('');
 	end
-	
+
 	-- Macro List
 	local offset=FauxScrollFrame_GetOffset(SuperMacroFrameSuperScrollFrame);
 	local firstmacro = offset*MACRO_COLUMNS+1;
 	local lastmacro = firstmacro + MACRO_ROWS*MACRO_COLUMNS -1;
-	
+
 	for i=1, MACROS_SUPER_SHOWN do
 		getglobal("SuperMacroSuperButton"..i.."ID"):SetText(firstmacro+i-1);
 		macroButton = getglobal("SuperMacroSuperButton"..i);
@@ -277,7 +288,7 @@ function SuperMacroFrame_Update()
 
 	-- Scroll frame stuff
 	FauxScrollFrame_Update(SuperMacroFrameSuperScrollFrame, ceil(numMacros/10), MACRO_ROWS, MACRO_ROW_HEIGHT );
-	
+
 	end
 -- END update super frame
 end
@@ -405,7 +416,7 @@ function SuperMacroPopupFrame_OnHide()
 		SuperMacroFrameSuperText:Show();
 		SuperMacroFrameSuperText:SetFocus();
 	end
-	
+
 	-- Enable Buttons
 	SuperMacroEditButton:Enable();
 	SuperMacroDeleteButton:Enable();
@@ -423,7 +434,7 @@ function SuperMacroPopupFrame_Update()
 	local macroPopupIcon, macroPopupButton;
 	local macroPopupOffset = FauxScrollFrame_GetOffset( SuperMacroPopupScrollFrame );
 	local index;
-	
+
 	-- Determine whether we're creating a new macro or editing an existing one
 	if ( this.mode == "newaccount" or this.mode == "newcharacter" ) then
 		SuperMacroPopupEditBox:SetText("");
@@ -438,7 +449,7 @@ function SuperMacroPopupFrame_Update()
 		end
 		SuperMacroPopupEditBox:SetText(name);
 	end
-	
+
 	-- Icon list
 	for i=1, NUM_MACRO_ICONS_SHOWN do
 		macroPopupIcon = getglobal("SuperMacroPopupButton"..i.."Icon");
@@ -457,7 +468,7 @@ function SuperMacroPopupFrame_Update()
 			macroPopupButton:SetChecked(nil);
 		end
 	end
-	
+
 	-- Scrollbar stuff
 	FauxScrollFrame_Update(SuperMacroPopupScrollFrame, ceil(numMacroIcons / NUM_ICONS_PER_ROW) , NUM_ICON_ROWS, MACRO_ICON_ROW_HEIGHT );
 end
@@ -745,10 +756,10 @@ function RunLine(...)
 -- else send to chat edit box
 	for k=1,arg.n do
 		local text=arg[k];
-		
+
 		-- replace aliases
 		text = SM_ReplaceAlias(text, -1);
-		
+
 		if ( string.find(text, "^/cast") ) then
 			local i, book = SM_FindSpell(gsub(text,"^%s*/cast%s*(%w.*[%w%)])%s*$","%1"));
 			if ( i ) then
@@ -765,7 +776,7 @@ function RunLine(...)
 		end
 	end -- for
 end -- RunLine()
-	
+
 function SM_ReplaceAlias(body, after)
 	local size, step;
 	if ( after==-1 ) then
@@ -909,7 +920,7 @@ function GetMacroInfo(index, code)
 	end
 end
 
-function SetActionMacro( actionid , macro ) 
+function SetActionMacro( actionid , macro )
 	local macroid = GetMacroIndexByName( macro )
 	if ( macroid and actionid > 0 and actionid <= 120 ) then
 		PickupAction( actionid );

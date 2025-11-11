@@ -1,28 +1,28 @@
 SM_INV_SLOT = {
 ["AMMOSLOT"]=0,
 ["HEADSLOT"]=1,
-["NECKSLOT"]=2, 
-["SHOULDERSLOT"]=3, 
-["SHIRTSLOT"]=4, 
-["CHESTSLOT"]=5, 
-["WAISTSLOT"]=6, 
-["LEGSSLOT"]=7, 
-["FEETSLOT"]=8, 
-["WRISTSLOT"]=9, 
-["HANDSSLOT"]=10, 
-["FINGER0SLOT"]=11, 
-["FINGER1SLOT"]=12, 
-["TRINKET0SLOT"]=13, 
-["TRINKET1SLOT"]=14, 
-["BACKSLOT"]=15, 
-["MAINHANDSLOT"]=16, 
-["SECONDARYHANDSLOT"]=17, 
-["RANGEDSLOT"]=18, 
-["TABARDSLOT"]=19, 
-["BAG0SLOT"]=20, 
-["BAG1SLOT"]=21, 
-["BAG2SLOT"]=22, 
-["BAG3SLOT"]=23, 
+["NECKSLOT"]=2,
+["SHOULDERSLOT"]=3,
+["SHIRTSLOT"]=4,
+["CHESTSLOT"]=5,
+["WAISTSLOT"]=6,
+["LEGSSLOT"]=7,
+["FEETSLOT"]=8,
+["WRISTSLOT"]=9,
+["HANDSSLOT"]=10,
+["FINGER0SLOT"]=11,
+["FINGER1SLOT"]=12,
+["TRINKET0SLOT"]=13,
+["TRINKET1SLOT"]=14,
+["BACKSLOT"]=15,
+["MAINHANDSLOT"]=16,
+["SECONDARYHANDSLOT"]=17,
+["RANGEDSLOT"]=18,
+["TABARDSLOT"]=19,
+["BAG0SLOT"]=20,
+["BAG1SLOT"]=21,
+["BAG2SLOT"]=22,
+["BAG3SLOT"]=23,
 }
 
 SlashCmdList["SUPERMACRO"] = function(msg)
@@ -106,7 +106,7 @@ SlashCmdList["SUPERMACRO"] = function(msg)
 				SuperMacroOptionsFrame_OnShow();
 			end
 		else
-			ChatFrame_DisplaySlashHelp("SUPERMACRO",5,6);	
+			ChatFrame_DisplaySlashHelp("SUPERMACRO",5,6);
 		end
 		return;
 	end
@@ -114,7 +114,7 @@ SlashCmdList["SUPERMACRO"] = function(msg)
 		ShowUIPanel(SuperMacroOptionsFrame);
 		return;
 	end
-	
+
 	ChatFrame_DisplaySlashHelp("SUPERMACRO");
 	return;
 end
@@ -504,16 +504,29 @@ function FindBuff( obuff, unit, item)
 		end
 		--c = b;
 	end
+	-- Turtle WoW overflow debuffs appear in buff slots - check there too
+	c=nil;
+	for i=1, 32 do
+		tooltip:SetOwner(UIParent, "ANCHOR_NONE");
+		tooltip:SetUnitBuff(unit, i);
+		b = textleft1:GetText();
+		tooltip:Hide();
+		if ( b and strfind(strlower(b), buff) ) then
+			return "debuff", i, b;
+		elseif ( c==b ) then
+			break;
+		end
+	end
 	tooltip:Hide();
 end
 
 function SpellReady(spell)
     local i,a=0
-    while a~=spell do 
-        i=i+1 
+    while a~=spell do
+        i=i+1
         a=GetSpellName(i,"spell")
-    end 
-    if GetSpellCooldown(i,"spell") == 0 then 
+    end
+    if GetSpellCooldown(i,"spell") == 0 then
         return true
     end
 end
@@ -625,12 +638,12 @@ end
 function RegisterEventMacro( macro, super, ...)
 	-- ... is for all events you want to register
 	-- super is 1 if running 'Super' Macro; else 0 or nil
-	
+
 	local macroname = macro;
 	if ( super == 1 ) then
 		macroname = "SUPER" .. macroname;
 	end
-	
+
 	for i=1, arg.n do
 		local event = arg[i];
 		--Print(event);
@@ -647,16 +660,16 @@ function UnregisterEventMacro( macro, super, ...)
 	if ( super == 1 ) then
 		macroname = "SUPER" .. macroname;
 	end
-	
+
 	for i=1, arg.n do
 		local event = arg[i];
 		--Print(event);
-		
+
 		if ( not SuperMacro_EventsFrame.events[event] ) then
 			-- event not registered
 			break;
 		end
-		
+
 		SuperMacro_EventsFrame.events[event][macroname] = nil;
 
 		if ( getn( SuperMacro_EventsFrame.events[event] ) == 0 ) then
@@ -719,14 +732,14 @@ end
 Printc=PrintColor;
 
 -- Prints a table in an organized format
-function PrintTable(table, rowname, level) 
+function PrintTable(table, rowname, level)
 	if ( rowname == nil ) then rowname = "ROOT"; end
 --Print(level)
 	--level = level and level or 1;
 	if ( not level ) then level = 1; end
 	local msg = "";
-	for i=1, level do 
-		msg = msg .. "   ";	
+	for i=1, level do
+		msg = msg .. "   ";
 	end
 
 	if ( table == nil ) then Print (msg.."["..rowname.."] := nil "); return end
@@ -736,7 +749,7 @@ function PrintTable(table, rowname, level)
 			PrintTable(v,k,level+1);
 		end
 		Print(msg.."} ");
-	elseif (type(table) == "function" ) then 
+	elseif (type(table) == "function" ) then
 		Print(msg.."["..rowname.."] => {{FunctionPtr*}}");
 	else
 		Print(msg.."["..rowname.."] => "..table);
