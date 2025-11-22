@@ -237,7 +237,6 @@ If a macro is deleted, the extend that goes with it is also deleted if there are
 - added "mouseover" can now be used as a unit identifier in the FindBuff() function
 - added SpellReady function. More details in funtions.txt
 - Increased the number of buffs counted when looking for a buff/debuff
-
 - If you want see tooltips and button text for spell in macros you should add line to top of your macro:
     - ``/run -- CastSpellByName("Spell Name")``
     - ``/script -- CastSpellByName("Spell Name")``
@@ -264,7 +263,7 @@ If a macro is deleted, the extend that goes with it is also deleted if there are
 - fixed: /use item to show item's info
 - fixed: /cast spell to show spell's info for (minor) etc.
 - fixed: GetSpellCooldown error popup for SM_Channel()
-* option to hide menu button
+- option to hide menu button
 - option to wrap long sentences (won't work until they add EditBox:SetNonSpaceWrap() )
 - slash command to run super macro /smacro
 - register events to run macros. see functions.txt for RegisterEventMacro and UnregisterEventMacro.
