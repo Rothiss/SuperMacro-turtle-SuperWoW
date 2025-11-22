@@ -1,15 +1,13 @@
-
 local function GetAddonDir()
     local name = "SuperMacro"
-    for i=1, GetNumAddOns() do
+    for i = 1, GetNumAddOns() do
         name = GetAddOnInfo(i)
         if string.find(name, "SuperMacro") then
             break
         end
     end
-    return "Interface\\AddOns\\"..name
+    return "Interface\\AddOns\\" .. name
 end
-
 
 local function AddCustomHandlerForEditBox(editBox)
     -- Add tabulation handler
@@ -29,7 +27,7 @@ local function AddCustomHandlerForEditBox(editBox)
         local y = arg2
         local lineHeight = arg4
         local lineNumber = math.abs(math.floor(y / lineHeight + 0.5)) + 1
-    this.textLineNumber:SetText(string.format("Line: %4d", lineNumber))
+        this.textLineNumber:SetText(string.format("Line: %4d", lineNumber))
     end)
 end
 
@@ -42,7 +40,7 @@ function SuperMacroInitFrames()
 end
 
 function SuperMacroHandleEditBox(editBox)
-    local scrollBar = getglobal(editBox:GetParent():GetName().."ScrollBar")
+    local scrollBar = getglobal(editBox:GetParent():GetName() .. "ScrollBar")
     editBox:GetParent():UpdateScrollChildRect();
 
     local _, max = scrollBar:GetMinMaxValues();
@@ -72,7 +70,7 @@ function SuperMacroUpdateConfig()
 
     local editBoxFont = "Fonts\\FRIZQT__.TTF"
     if SM_VARS.monoFont == 1 then
-        editBoxFont = GetAddonDir().."\\fonts\\UbuntuMono-R.ttf"
+        editBoxFont = GetAddonDir() .. "\\fonts\\UbuntuMono-R.ttf"
     end
     local textFontSize = SM_VARS.editBoxFontSize or 10
 
@@ -133,4 +131,3 @@ function SuperMacroUpdateConfig()
     SuperMacroFrameSuperText:SetHeight(superEditScrollFrameSizeY)
     SuperMacroFrameSuperText:SetFont(editBoxFont, textFontSize)
 end
-

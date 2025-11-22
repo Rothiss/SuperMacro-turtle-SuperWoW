@@ -9,7 +9,7 @@ local function SetCurrentPage(pageId)
     currentPageId = pageId
     local extendText
     if currentPageId then
-        extendText=SM_EXTEND[currentPageId]
+        extendText = SM_EXTEND[currentPageId]
     end
     if extendText then
         SuperMacroFrameExtendText:SetText(extendText)
@@ -25,12 +25,12 @@ local function SaveCurrentPage()
         return
     end
 
-    local text=SuperMacroFrameExtendText:GetText()
-    if text and text~="" then
-        SM_EXTEND[currentPageId]=text
+    local text = SuperMacroFrameExtendText:GetText()
+    if text and text ~= "" then
+        SM_EXTEND[currentPageId] = text
     else
         -- auto delete empty page
-        SM_EXTEND[currentPageId]=nil
+        SM_EXTEND[currentPageId] = nil
     end
 
     SuperMacroFrameExtendText:ClearFocus()
@@ -39,8 +39,8 @@ end
 
 -- Run all current scripts
 local function RunAllScripts()
-    for m,e in pairs(SM_EXTEND) do
-        if ( e ) then
+    for m, e in pairs(SM_EXTEND) do
+        if (e) then
             RunScript(e)
         end
     end
@@ -58,7 +58,7 @@ end
 -- Save current UI text changes and run scripts
 function SuperMacroRunAllExtend()
     SaveCurrentPage()
-	RunAllScripts()
+    RunAllScripts()
 end
 
 function SuperMacroSelectExtend(pageId)
@@ -76,7 +76,7 @@ end
 
 function SuperMacroDeleteExtend(pageId)
     SaveCurrentPage()
-    SM_EXTEND[pageId]=nil
+    SM_EXTEND[pageId] = nil
     if pageId == currentPageId then
         -- Update script UI
         SetCurrentPage(pageId)
