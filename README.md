@@ -20,7 +20,7 @@ This addon provides a very much improved interface for macros. Its special funct
 - Put an item link or tradeskill recipe into the macro. ******
 - Ingame extended LUA code editor. *******
 - Options frame. ********
-- Also see functions.txt for user-friendly functions and slash commands that can be used in your macros.
+- Also see ```functions.md``` for user-friendly functions and slash commands that can be used in your macros.
 
 #### \* The new SuperMacro interface displays 18 (global) account macros on the left and 18 character-specific macros on the right.
 Buttons at the top create new macros for each category.
@@ -126,7 +126,7 @@ where Attack can be replaced by the name of another macro.
 You can also use Macro() in place of RunMacro() if you are close to 256 letter limit.
 
 #### ***** Slash commands
-For complete info on slash commands and their corresponding LUA functions, read functions.txt.
+For complete info on slash commands and their corresponding LUA functions, read ```functions.md```.
 
 Supermacro changes the /macro command so that you can run a macro from the chat line. Use /macro <macro_name>. This is equivalent to /script RunMacro("macro_name").
 Ex. /macro Attack
@@ -266,7 +266,7 @@ If a macro is deleted, the extend that goes with it is also deleted if there are
 - option to hide menu button
 - option to wrap long sentences (won't work until they add EditBox:SetNonSpaceWrap() )
 - slash command to run super macro /smacro
-- register events to run macros. see functions.txt for RegisterEventMacro and UnregisterEventMacro.
+- register events to run macros. see ```functions.md``` for RegisterEventMacro and UnregisterEventMacro.
     - Ex. RegisterEventMacro( "ding", 1, "PLAYER_LEVEL_UP"); -- do something whenever you level up
 - ViewEventMacro() prints the events table
 - remove virtual templates from toc (Fonts.xml, UIPanelTemplates.xml, ClassTrainerFrameTemplates.xml)
@@ -293,7 +293,7 @@ If a macro is deleted, the extend that goes with it is also deleted if there are
 3.12
 - fixed: this is nil: SM_tooltip.lua line 81
 - fixed: body is nil for FindFirstSpell and FindFirstItem
-- caststop(spell [,...]) put in functions.txt
+- caststop(spell [,...]) put in ```functions.md```
 
 3.11
 - text and texture for supers returned for non-default action buttons.
@@ -315,7 +315,7 @@ If a macro is deleted, the extend that goes with it is also deleted if there are
   - Ex. RunSuperMacro(1);
   - Ex. RunSuperMacro("MySuperMacro");
 - You can place SuperMacros on action buttons, but swapping them around is not perfect. These problems may not be not fixable with LUA.
-- Read functions.txt for further explanations of these new commands: CraftItem, SayRandom, RunSuperMacro.
+- Read ```functions.md``` for further explanations of these new commands: CraftItem, SayRandom, RunSuperMacro.
 
 3.04 changes
 - fixed bug: tooltip
@@ -331,7 +331,7 @@ If a macro is deleted, the extend that goes with it is also deleted if there are
 - for 1.9 patch
 - lost blizzard_macroui dependency
 - lost unlimited macros
-- shortened versions of common functions (eg cast, stopcast, use, echo, send, pickup). read functions.txt
+- shortened versions of common functions (eg cast, stopcast, use, echo, send, pickup). read ```functions.md```
 - options frame
 - /supermacro options to open options frame
 - minimap button (optional)
@@ -339,7 +339,7 @@ If a macro is deleted, the extend that goes with it is also deleted if there are
 - action buttons replaced with appropriate icons (optional)
 - game menu button below Keybindings and above Macros
 - tooltip support for discordactionbars (untested)
-- documentation for user-friendly functions in functions.txt
+- documentation for user-friendly functions in ```functions.md```
 - SM_Channel(spell) for uninterrupted channeling, /smchan, /smchannel
 - /in seconds[+] command, /smin, SM_IN(seconds, command[, repeat])
 - /shift form
@@ -348,7 +348,7 @@ If a macro is deleted, the extend that goes with it is also deleted if there are
 2.89 change
 - fixed self-cast
 - fixed item link from tradeskill
-- functions.txt lists convenient functions and slash commands
+- ```functions.md``` lists convenient functions and slash commands
 - imported some functions from 1900 series
 - new functions: DoOrder, Pass, Fail
 
